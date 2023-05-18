@@ -3,18 +3,15 @@ getData.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
         var json = JSON.parse(this.responseText);
 
-        var table = document.getElementById("myTable");
+        var tableBody = document.getElementById("tbBody");
 
         for (var i = 0; i < json.length; i++) {
             var item = json[i];
 
-            var row = table.insertRow();
-            //akses data JSON taskname,description
+            var row = tableBody.insertRow();
 
             var taskname = item.taskname;
             var description = item.description;
-            //menambah data ke tabel
-
 
             var cellTaskName = row.insertCell();
             cellTaskName.innerHTML = taskname;
@@ -22,6 +19,15 @@ getData.onreadystatechange = function () {
             var cellDescription = row.insertCell();
             cellDescription.innerHTML = description;
 
+            var cellAction = row.insertCell();
+
+            var updateButton = document.createElement("button");
+            updateButton.textContent = "Update";
+            cellAction.appendChild(updateButton);
+
+            var deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            cellAction.appendChild(deleteButton);
         }
     }
 };
@@ -47,10 +53,10 @@ function submitForm(event) {
     sendData.setRequestHeader('Content-Type', 'application/json');
     sendData.onreadystatechange = function () {
         if (sendData.readyState === XMLHttpRequest.DONE && sendData.status === 200) {
-            
+
             // Menambahkan baris baru ke tabel secara live
-            var table = document.getElementById("myTable");
-            var row = table.insertRow(-1);
+            var tableBody = document.getElementById("tbBody");
+            var row = tableBody.insertRow(-1);
             var cell1 = row.insertCell();
             cell1.textContent = taskname;
             var cell2 = row.insertCell();

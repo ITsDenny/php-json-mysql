@@ -15,6 +15,7 @@
             font-family: arial, sans-serif;
             border-collapse: collapse;
             width: 100%;
+            text-align: center;
         }
 
         td,
@@ -24,21 +25,20 @@
             padding: 8px;
         }
 
-        tr:nth-child(even) {
-            background-color: #dddddd;
-        }
-
         .btn {
             margin: 10px;
         }
+        table button{
+            margin: 5px;
+            padding: 5px;
+            border-radius: 15px;
+        }
+       
     </style>
 </head>
 
 <body>
-    <!--Nav start-->
-
-    <!--Nav end-->
-    </div>
+   
     <h1>This is how to eat(consume) Json in PHP</h1>
     <form id="myForm" onsubmit="submitForm(event)" style="margin: 20px;">
         <input type="text" name="taskname" id="" placeholder="Task Name">
@@ -51,10 +51,14 @@
             <tr>
                 <th>Task Name</th>
                 <th>Description</th>
+                <th>Action</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="tbBody">
             <!--JSON Data will fetched here..-->
+            <tr>
+
+            </tr>
         </tbody>
     </table>
     <!--Form untuk tambah todo-->
