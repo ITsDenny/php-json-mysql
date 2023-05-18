@@ -1,3 +1,4 @@
+//function for get data from db
 let getData = new XMLHttpRequest();
 getData.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
@@ -27,7 +28,12 @@ getData.onreadystatechange = function () {
 
             var deleteButton = document.createElement("button");
             deleteButton.textContent = "Delete";
+            deleteButton.setAttribute("data-id",item.id);
+            deleteButton.addEventListener("click",function(){
+                deleteData(item.id);
+            });
             cellAction.appendChild(deleteButton);
+
         }
     }
 };
@@ -35,7 +41,7 @@ getData.onreadystatechange = function () {
 getData.open("GET", "function.php", true);
 getData.send();
 
-
+//function save data 
 function submitForm(event) {
     event.preventDefault();
 
@@ -62,12 +68,38 @@ function submitForm(event) {
             var cell2 = row.insertCell();
             cell2.textContent = description;
 
+
             // Mengosongkan inputan form
             document.getElementsByName('taskname')[0].value = '';
             document.getElementsByName('description')[0].value = '';
+
 
             console.log(sendData.responseText);
         }
     };
     sendData.send(JSON.stringify(data));
+}
+
+//function delete data by id
+
+function deleteData(id) {
+    var confirmation = confirm("Delete this task?");
+
+    if (confirmation) {
+        var deleteRequest = new XMLHttpRequest();
+        deleteRequest.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("Data deleted!");
+                //delete from table
+                var row = document.querySelector("[data-id='" + id + "']");
+                if (row) {
+                    row.parentNode.removeChild(row);
+                }
+                location.reload();
+            }
+        };
+        deleteRequest.open('POST', 'delete.php', true);
+        deleteRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        deleteRequest.send("id=" + id);
+    }
 }
