@@ -21,25 +21,69 @@ getData.onreadystatechange = function () {
             cellDescription.innerHTML = description;
 
             var cellAction = row.insertCell();
-
+            //update button
             var updateButton = document.createElement("button");
             updateButton.textContent = "Update";
-            cellAction.appendChild(updateButton);
+            updateButton.setAttribute("data-id", item.id);
+            updateButton.addEventListener("click", function () {
+                var id = this.getAttribute("data-id");
+                showUpdateForm(id);
+            });
 
+            cellAction.appendChild(updateButton);
+            // Fungsi untuk menampilkan form update
+
+            function showUpdateForm(id) {
+                updateForm.innerHTML = "";
+
+                var form = document.createElement("form");
+                form.addEventListener("submit", function (event) {
+                    event.preventDefault();
+                    updateData(id, form);
+                });
+
+                var tasknameInput = document.createElement("input");
+                tasknameInput.type = "text";
+                tasknameInput.value = item.taskname;
+                tasknameInput.style.padding = "5px";
+                tasknameInput.style.marginBottom = "10px";
+                form.appendChild(tasknameInput);
+
+                var descriptionInput = document.createElement("input");
+                descriptionInput.value = item.description;
+                form.appendChild(descriptionInput);
+
+                var submitButton = document.createElement("button");
+                submitButton.type = "submit";
+                submitButton.textContent = "Update";
+                descriptionInput.style.padding = "5px";
+                descriptionInput.style.marginBottom = "10px";
+                form.appendChild(submitButton);
+
+                updateForm.appendChild(form);
+            }
+
+            //delete button 
             var deleteButton = document.createElement("button");
             deleteButton.textContent = "Delete";
-            deleteButton.setAttribute("data-id",item.id);
-            deleteButton.addEventListener("click",function(){
-                deleteData(item.id);
+            deleteButton.setAttribute("data-id", item.id);
+            deleteButton.addEventListener("click", function () {
+                deleteData(item.id); // Panggil fungsi deleteData dengan ID sebagai argumen
             });
             cellAction.appendChild(deleteButton);
-
         }
     }
 };
 
+
+
+
 getData.open("GET", "function.php", true);
 getData.send();
+
+//Function send updated data
+
+
 
 //function save data 
 function submitForm(event) {
@@ -68,11 +112,25 @@ function submitForm(event) {
             var cell2 = row.insertCell();
             cell2.textContent = description;
 
+            // Membuat tombol Update
+            var updateButton = document.createElement("button");
+            updateButton.textContent = "Update";
+            updateButton.addEventListener("click", function () {
+                updateData(row); // Mengirimkan row sebagai parameter updateData
+            });
+            row.insertCell().appendChild(updateButton);
+
+            // Membuat tombol Delete
+            var deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.addEventListener("click", function () {
+                deleteData(row); // Mengirimkan row sebagai parameter deleteData
+            });
+            row.insertCell().appendChild(deleteButton);
 
             // Mengosongkan inputan form
             document.getElementsByName('taskname')[0].value = '';
             document.getElementsByName('description')[0].value = '';
-
 
             console.log(sendData.responseText);
         }

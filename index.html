@@ -28,19 +28,25 @@
         .btn {
             margin: 10px;
         }
-        table button{
+
+        table button {
             margin: 5px;
             padding: 5px;
             border-radius: 15px;
         }
-       
+
+        input[type="text"],
+        textarea {
+            padding: 5px;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 
 <body>
-   
+
     <h1>This is how to eat(consume) Json in PHP</h1>
-    <form id="myForm" onsubmit="submitForm(event)" style="margin: 20px;">
+    <form id="myForm" onsubmit="submitForm(event)" >
         <input type="text" name="taskname" id="" placeholder="Task Name">
         <input type="text" name="description" id="" placeholder="Description">
         <input type="submit" value="Submit">
@@ -58,8 +64,10 @@
             <!--JSON Data will fetched here..-->
         </tbody>
     </table>
-    <!--Form untuk tambah todo-->
+    <!--Form untuk update todo-->
+    <div id="updateForm">
 
+    </div>
 
     <!--Make Form End-->
     <script src="js/script.js"></script>
